@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>위클리 다이어리 - 코티지코어 감성 치유 일기장</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Pretendard and Nanum Pen Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cottage: {
+                            bg: '#F6F4EE',       /* Warm oat / soft cream background */
+                            card: '#FFFDF9',     /* Paper white */
+                            primary: '#556B2F',  /* Olive / Moss Green */
+                            secondary: '#D2B48C',/* Tan / Warm Wood */
+                            accent: '#BC8F8F',   /* Rosy brown / Dried flower */
+                            sage: '#E3E8DC',     /* Soft Sage green */
+                            brown: '#4A3B32',    /* Earthy dark brown text */
+                            muted: '#8C7A70'     /* Muted taupe */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', 'sans-serif'],
+                        handwriting: ['Nanum Pen Script', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #F6F4EE;
+            color: #4A3B32;
+            overflow-x: hidden;
+        }
+        /* Custom scrollbar for Cottagecore aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #E3E8DC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #556B2F;
+            border-radius: 4px;
+        }
+        .glass-panel {
+            background: rgba(255, 253, 249, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(85, 107, 47, 0.15);
+        }
+        .diary-shadow {
+            box-shadow: 0 10px 30px -5px rgba(74, 59, 50, 0.08);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-cottage-bg text-cottage-brown min-h-screen flex flex-col justify-between selection:bg-cottage-sage selection:text-cottage-brown">
+
+    <!-- 상단 네비게이션바 (Navigation Bar) -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-cottage-sage/60 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- 로고 및 사이트 이름 (곰돌이 캐릭터 아이콘 포함) -->
+            <a href="/" class="flex items-center space-x-3 group">
+                <div class="relative w-12 h-12 rounded-2xl bg-gradient-to-tr from-cottage-primary to-cottage-secondary flex items-center justify-center text-white shadow-md transform group-hover:rotate-6 transition duration-300">
+                    <!-- 코티지 곰돌이 캐릭터 아이콘 SVG -->
+                    <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                        <circle cx="12" cy="13" r="7" fill="#D2B48C"/>
+                        <circle cx="7" cy="7" r="3.5" fill="#D2B48C"/>
+                        <circle cx="17" cy="7" r="3.5" fill="#D2B48C"/>
+                        <circle cx="9.5" cy="12" r="1" fill="#4A3B32"/>
+                        <circle cx="14.5" cy="12" r="1" fill="#4A3B32"/>
+                        <ellipse cx="12" cy="14" rx="1.5" ry="1" fill="#4A3B32"/>
+                        <path d="M11 16.5 C11 16.5, 12 17.5, 13 16.5" stroke="#4A3B32" stroke-width="1" stroke-linecap="round" fill="none"/>
+                    </svg>
+                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-cottage-primary rounded-full flex items-center justify-center text-[10px] text-white">🌿</div>
+                </div>
+                <div>
+                    <span class="text-2xl font-bold tracking-tight text-cottage-brown">위클리 다이어리</span>
+                    <span class="block text-xs text-cottage-muted font-medium">포근한 코티지 감성 힐링 공간</span>
+                </div>
+            </a>
+
+            <!-- 메뉴 및 인증 버튼 -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="#hero" class="hover:text-cottage-primary transition">홈</a>
+                <a href="#writer-section" class="hover:text-cottage-primary transition">오늘의 일기</a>
+                <a href="#weekly-journal" class="hover:text-cottage-primary transition">위클리 저널</a>
+                <a href="#features" class="hover:text-cottage-primary transition">서비스 소개</a>
+            </nav>
+
+            <!-- 로그인 / 회원가입 / 마이페이지 버튼 -->
+            <div class="flex items-center space-x-3">
+                <a href="/login" class="px-4 py-2 text-sm font-semibold rounded-xl text-cottage-brown hover:bg-cottage-sage/40 transition">
+                    로그인
+                </a>
+                <a href="/signup" class="px-4 py-2 text-sm font-semibold rounded-xl bg-white border border-cottage-primary/30 text-cottage-primary hover:bg-cottage-primary hover:text-white transition shadow-xs">
+                    회원가입
+                </a>
+                <a href="/mypage" class="w-10 h-10 rounded-xl bg-cottage-sage/50 flex items-center justify-center text-cottage-primary hover:bg-cottage-primary hover:text-white transition shadow-xs" title="마이페이지">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 소개 영역 (Hero Section) -->
+    <main class="flex-grow">
+        <section id="hero" class="relative overflow-hidden py-16 lg:py-24">
+            <!-- 배경 데코 요소 (코티지 톤) -->
+            <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-cottage-sage/30 blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/2 -right-24 w-96 h-96 rounded-full bg-cottage-secondary/20 blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cottage-sage text-cottage-primary text-sm font-semibold shadow-xs animate-float">
+                            <i class="fa-solid fa-seedling"></i>
+                            <span>숲속 오두막처럼 편안한 나의 비밀 일기장</span>
+                        </div>
+                        
+                        <!-- 홈 탭 제목 바로 뒤에 곰돌이 캐릭터 일러스트 배지가 함께 보이도록 배치 -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-cottage-brown leading-tight">
+                                지친 하루 끝에 만나는<br>
+                                <span class="text-cottage-primary">포근한 위로와 숲속 쉼터</span>
+                            </h1>
+                            <!-- 홈 제목 뒤에 바로 배치된 곰돌이 캐릭터 컴포넌트 -->
+                            <div class="inline-flex items-center space-x-2 bg-white/90 border border-cottage-sage px-4 py-2.5 rounded-2xl shadow-sm animate-float">
+                                <div class="w-10 h-10 rounded-xl bg-cottage-secondary/40 flex items-center justify-center text-cottage-primary shadow-xs">
+                                    <svg class="w-7 h-7" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="13" r="7" fill="#D2B48C"/>
+                                        <circle cx="7" cy="7" r="3.5" fill="#D2B48C"/>
+                                        <circle cx="17" cy="7" r="3.5" fill="#D2B48C"/>
+                                        <circle cx="9.5" cy="12" r="1" fill="#4A3B32"/>
+                                        <circle cx="14.5" cy="12" r="1" fill="#4A3B32"/>
+                                        <ellipse cx="12" cy="14" rx="1.5" ry="1" fill="#4A3B32"/>
+                                    </svg>
+                                </div>
+                                <div class="text-left">
+                                    <span class="block text-xs font-bold text-cottage-brown">포근이 메이트</span>
+                                    <span class="block text-[10px] text-cottage-primary">"오늘도 수고했어요 🌿"</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-lg text-cottage-muted max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+                            두서없이 털어놓은 일상을 따뜻한 코티지 감성의 다이어리로 정돈해 드립니다. 
+                            다정한 공감과 칭찬 피드백으로 내일을 향한 초록빛 에너지를 충전해보세요.
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
+                            <a href="#writer-section" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-cottage-primary text-white font-semibold shadow-lg shadow-cottage-primary/30 hover:bg-opacity-90 transition transform hover:-translate-y-0.5 text-center">
+                                <i class="fa-solid fa-feather-pointed mr-2"></i> 마음 털어놓기 시작하기
+                            </a>
+                            <a href="#weekly-journal" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white border border-cottage-primary/30 text-cottage-brown font-semibold hover:bg-cottage-sage/30 transition text-center shadow-xs">
+                                <i class="fa-solid fa-calendar-week mr-2 text-cottage-primary"></i> 이번 주 저널 보기
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 오른쪽 코티지 곰돌이 메이트 일러스트 카드 프리뷰 -->
+                    <div class="lg:col-span-5">
+                        <div class="relative mx-auto max-w-md bg-white/90 p-6 rounded-3xl diary-shadow border border-cottage-sage transform rotate-1 hover:rotate-0 transition duration-500">
+                            <!-- 곰돌이 캐릭터 마스코트 배지 -->
+                            <div class="absolute -top-4 -right-2 bg-cottage-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-md flex items-center space-x-1.5 animate-float">
+                                <span>🐻</span>
+                                <span>포근이 메이트</span>
+                            </div>
+
+                            <div class="flex items-center space-x-3 mb-4 border-b border-cottage-sage/40 pb-3">
+                                <div class="w-12 h-12 rounded-2xl bg-cottage-secondary/40 flex items-center justify-center text-cottage-primary font-bold shadow-xs">
+                                    <svg class="w-8 h-8" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="13" r="7" fill="#D2B48C"/>
+                                        <circle cx="7" cy="7" r="3.5" fill="#D2B48C"/>
+                                        <circle cx="17" cy="7" r="3.5" fill="#D2B48C"/>
+                                        <circle cx="9.5" cy="12" r="1" fill="#4A3B32"/>
+                                        <circle cx="14.5" cy="12" r="1" fill="#4A3B32"/>
+                                        <ellipse cx="12" cy="14" rx="1.5" ry="1" fill="#4A3B32"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-cottage-brown">포근이의 숲속 편지</p>
+                                    <p class="text-xs text-cottage-muted">2026년 10월 6일 화요일</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3 font-handwriting text-2xl text-stone-700 bg-cottage-bg p-4 rounded-2xl border border-dashed border-cottage-primary/40">
+                                <p>"오늘 하루도 묵묵히 버텨내느라 정말 수고 많았어요. 따뜻한 차 한 잔 마시며 깊은숨을 쉬어보세요 🌿"</p>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between text-xs text-cottage-muted">
+                                <span>감정 상태: 🍃 평온·초록빛</span>
+                                <span class="text-cottage-primary font-semibold">위클리 저널 연동됨</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 사용자 입력 폼 영역 (Diary Writer Section) -->
+        <section id="writer-section" class="py-16 bg-white/60 border-y border-cottage-sage/50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-10">
+                    <span class="text-xs font-bold uppercase tracking-wider text-cottage-primary px-3.5 py-1.5 bg-cottage-sage rounded-full">Daily Input</span>
+                    <h2 class="text-3xl font-bold tracking-tight text-cottage-brown">오늘 하루는 어떠셨나요?</h2>
+                    <p class="text-cottage-muted">오늘의 감정을 선택하고 숲속 오두막에 오신 것처럼 편안하게 일기를 적어주세요.</p>
+                </div>
+
+                <div class="glass-panel p-6 sm:p-10 rounded-3xl diary-shadow">
+                    <form id="diaryForm" class="space-y-8" onsubmit="handleAIProcessing(event)">
+                        
+                        <!-- ① 오늘의 감정 상태 선택 -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-cottage-brown flex items-center">
+                                <i class="fa-regular fa-face-smile text-cottage-primary mr-2 text-lg"></i>
+                                1. 오늘 하루를 대표하는 감정을 선택해주세요
+                            </label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="mood" value="지침" class="peer sr-only" required>
+                                    <div class="p-3.5 text-center rounded-2xl border-2 border-stone-200 bg-white peer-checked:border-cottage-primary peer-checked:bg-cottage-sage/30 hover:border-cottage-primary/50 transition shadow-xs">
+                                        <span class="text-2xl block mb-1">🌿</span>
+                                        <span class="text-sm font-semibold text-cottage-brown">지침·휴식필요</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="mood" value="평온" class="peer sr-only">
+                                    <div class="p-3.5 text-center rounded-2xl border-2 border-stone-200 bg-white peer-checked:border-cottage-primary peer-checked:bg-cottage-sage/30 hover:border-cottage-primary/50 transition shadow-xs">
+                                        <span class="text-2xl block mb-1">☕</span>
+                                        <span class="text-sm font-semibold text-cottage-brown">평온·차분함</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="mood" value="기쁨" class="peer sr-only">
+                                    <div class="p-3.5 text-center rounded-2xl border-2 border-stone-200 bg-white peer-checked:border-cottage-primary peer-checked:bg-cottage-sage/30 hover:border-cottage-primary/50 transition shadow-xs">
+                                        <span class="text-2xl block mb-1">☀️</span>
+                                        <span class="text-sm font-semibold text-cottage-brown">기쁨·설렘</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="mood" value="속상함" class="peer sr-only">
+                                    <div class="p-3.5 text-center rounded-2xl border-2 border-stone-200 bg-white peer-checked:border-cottage-primary peer-checked:bg-cottage-sage/30 hover:border-cottage-primary/50 transition shadow-xs">
+                                        <span class="text-2xl block mb-1">🌰</span>
+                                        <span class="text-sm font-semibold text-cottage-brown">속상함·위로필요</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- ② 자유로운 일기 작성 -->
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <label for="diaryContent" class="block text-sm font-bold text-cottage-brown flex items-center">
+                                    <i class="fa-solid fa-feather-pointed text-cottage-primary mr-2 text-lg"></i>
+                                    2. 오늘 겪은 일과 솔직한 감정을 털어놓아주세요
+                                </label>
+                                <button type="button" onclick="loadSampleText()" class="text-xs text-cottage-primary hover:underline font-semibold bg-cottage-sage px-3 py-1.5 rounded-lg transition">
+                                    <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> 예시글 불러오기
+                                </button>
+                            </div>
+                            <textarea id="diaryContent" rows="6" class="w-full p-4 rounded-2xl border border-stone-200 bg-white focus:outline-none focus:ring-2 focus:ring-cottage-primary/50 focus:border-cottage-primary transition text-stone-700 placeholder-stone-400 text-sm leading-relaxed shadow-inner" placeholder="오늘 숲속 같은 일상 속에서 느꼈던 생각들, 혹은 속상했던 일들을 편하게 적어보세요..." required></textarea>
+                        </div>
+
+                        <!-- ⑤ 필요한 버튼 또는 기능: 마음 털어놓기 및 초기화 -->
+                        <div class="flex flex-col sm:flex-row items-center justify-between pt-2 gap-3">
+                            <button type="button" onclick="resetDiaryForm()" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-stone-300 text-cottage-muted font-semibold hover:bg-stone-100 transition text-sm">
+                                <i class="fa-solid fa-rotate-right mr-1.5"></i> 내용 초기화
+                            </button>
+                            <button type="submit" id="submitBtn" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-cottage-primary text-white font-bold shadow-lg shadow-cottage-primary/30 hover:bg-opacity-90 transition text-base flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>마음 털어놓기 (포근이에게 전달)</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI 처리 및 결과 출력 영역 (AI Result Section - Hidden by default until submitted) -->
+        <section id="result-section" class="py-16 hidden">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                
+                <!-- 9. API 연결 구조 안내 영역 -->
+                <div class="bg-cottage-sage/50 border border-cottage-primary/30 p-4 rounded-2xl text-xs text-cottage-brown flex items-start space-x-3">
+                    <i class="fa-solid fa-circle-info text-cottage-primary text-base mt-0.5"></i>
+                    <div>
+                        <span class="font-bold block mb-1">[시스템 구조 안내 - 현재 프론트엔드 시뮬레이션 모드]</span>
+                        사용자 입력값 ➔ 곰돌이 포근이 페이로드 생성 ➔ (추후 Gemini API 연동 영역) ➔ 코티지 힐링 피드백 및 감성 다이어리 출력 완료
+                    </div>
+                </div>
+
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-cottage-primary px-3.5 py-1.5 bg-cottage-sage rounded-full">Poguni's Letter</span>
+                    <h2 class="text-3xl font-bold tracking-tight text-cottage-brown">포근이 메이트가 답장을 보냈어요</h2>
+                    <p class="text-cottage-muted">오늘 하루를 포근하게 돌아보는 맞춤형 피드백과 숲속 감성 다이어리입니다.</p>
+                </div>
+
+                <!-- ① 따뜻한 대화형 피드백 -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl diary-shadow border-l-4 border-l-cottage-primary space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-2xl bg-cottage-primary text-white flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-cottage-brown">포근이의 다정한 위로</h3>
+                            <p class="text-xs text-cottage-muted">오늘 잘한 점과 진심 어린 공감</p>
+                        </div>
+                    </div>
+                    <p id="aiFeedbackText" class="text-stone-700 leading-relaxed font-medium bg-cottage-bg p-4 rounded-2xl text-base">
+                        <!-- JavaScript로 동적 채워짐 -->
+                    </p>
+                </div>
+
+                <!-- ② 감성 다이어리 카드 형식 -->
+                <div class="bg-white p-6 sm:p-8 rounded-3xl diary-shadow border border-cottage-sage relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-cottage-secondary/40 text-cottage-brown text-xs font-bold px-4 py-2 rounded-bl-2xl">
+                        🎨 코티지 스케치 묘사 콘셉트
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <div class="md:col-span-5 bg-cottage-bg rounded-2xl p-6 text-center border border-dashed border-cottage-primary/40 flex flex-col items-center justify-center space-y-2">
+                            <i class="fa-solid fa-tree text-3xl text-cottage-primary"></i>
+                            <span class="text-xs font-bold text-stone-600">숲속 오두막 감성 수채화 연출</span>
+                            <p id="aiSketchDesc" class="text-xs text-cottage-muted italic">"따뜻한 차와 창밖의 초록빛 나뭇잎 풍경"</p>
+                        </div>
+                        <div class="md:col-span-7 space-y-4">
+                            <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+                                <span id="resultDate" class="text-sm font-bold text-cottage-primary">2026년 10월 6일</span>
+                                <span id="resultMoodBadge" class="px-3 py-1 bg-cottage-sage text-cottage-primary rounded-full text-xs font-semibold">🌿 평온함</span>
+                            </div>
+                            <div class="space-y-2">
+                                <h4 class="text-sm font-bold text-stone-600">정돈된 일기 요약</h4>
+                                <p id="aiSummaryText" class="text-stone-700 text-sm leading-relaxed bg-stone-50 p-3.5 rounded-xl font-handwriting text-2xl">
+                                    <!-- JavaScript로 동적 채워짐 -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ③ 하단 고정 정보 및 실천할 목표 3가지 -->
+                    <div class="mt-8 pt-6 border-t border-stone-100 space-y-3">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-cottage-muted flex items-center">
+                            <i class="fa-solid fa-list-check text-cottage-primary mr-1.5"></i> 포근이가 제안하는 가벼운 실천 목표 3가지
+                        </h4>
+                        <ul id="aiGoalsList" class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                            <!-- JavaScript로 동적 채워짐 -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ⑤ 필요한 버튼 또는 기능 -->
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                    <button onclick="saveDiaryRecord()" class="px-6 py-3 rounded-xl bg-cottage-primary text-white font-semibold shadow-md hover:bg-opacity-90 transition text-sm">
+                        <i class="fa-solid fa-bookmark mr-2"></i> 감정 일기 저장하기
+                    </button>
+                    <button onclick="openWeeklyJournalTab()" class="px-6 py-3 rounded-xl bg-white border border-cottage-primary text-cottage-primary font-semibold hover:bg-cottage-sage/30 transition text-sm shadow-xs">
+                        <i class="fa-solid fa-calendar-week mr-2"></i> 위클리 저널 보기
+                    </button>
+                    <button onclick="retriggerSketch()" class="px-6 py-3 rounded-xl bg-cottage-sage text-cottage-brown font-semibold hover:bg-opacity-80 transition text-sm">
+                        <i class="fa-solid fa-rotate-left mr-2"></i> 그림일기 다시 보기
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 위클리 저널 (Weekly Journal Section) -->
+        <section id="weekly-journal" class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                <div class="text-center space-y-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-cottage-primary px-3.5 py-1.5 bg-cottage-sage rounded-full">Weekly Journal</span>
+                    <h2 class="text-3xl font-bold tracking-tight text-cottage-brown">이번 주 감정 흐름 모아보기</h2>
+                    <p class="text-cottage-muted">한 주 동안 나의 마음이 초록빛 숲에서 어떻게 물들었는지 돌아보는 주간 요약입니다.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- 요일별 감정 카드 1 -->
+                    <div class="glass-panel p-6 rounded-3xl diary-shadow space-y-3 border-t-4 border-t-cottage-primary">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm text-cottage-brown">월요일 (10월 5일)</span>
+                            <span class="text-xl">🌿</span>
+                        </div>
+                        <p class="text-xs text-cottage-muted">한 주의 시작, 차분하게 일상을 정돈하고 마음의 여유를 가짐.</p>
+                        <div class="pt-2 text-xs font-semibold text-cottage-primary flex items-center">
+                            <i class="fa-solid fa-check mr-1"></i> 칭찬: 아침 산책 성공
+                        </div>
+                    </div>
+                    <!-- 요일별 감정 카드 2 (오늘) -->
+                    <div class="glass-panel p-6 rounded-3xl diary-shadow space-y-3 border-t-4 border-t-cottage-secondary bg-cottage-sage/20">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm text-cottage-primary">화요일 (10월 6일 - 오늘)</span>
+                            <span class="text-xl">☕</span>
+                        </div>
+                        <p class="text-xs text-cottage-muted">바쁜 순간 속에서도 따뜻한 차 한 잔으로 소소한 평온을 찾음.</p>
+                        <div class="pt-2 text-xs font-semibold text-cottage-primary flex items-center">
+                            <i class="fa-solid fa-check mr-1"></i> 칭찬: 나를 위한 다정한 기록
+                        </div>
+                    </div>
+                    <!-- 요일별 감정 카드 3 -->
+                    <div class="glass-panel p-6 rounded-3xl diary-shadow space-y-3 border-t-4 border-t-stone-300 opacity-80">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm text-cottage-brown">수요일 ~ 일요일</span>
+                            <span class="text-xl">✨</span>
+                        </div>
+                        <p class="text-xs text-cottage-muted">앞으로 기록될 따뜻한 일상과 숲속 이야기가 채워질 공간입니다.</p>
+                        <div class="pt-2 text-xs font-semibold text-cottage-muted flex items-center">
+                            <i class="fa-solid fa-clock mr-1"></i> 기록 대기 중
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 주간 종합 요약 박스 -->
+                <div class="bg-white p-8 rounded-3xl diary-shadow border border-cottage-sage flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 text-center md:text-left">
+                        <span class="text-xs font-bold text-cottage-primary bg-cottage-sage px-3 py-1 rounded-md">10월 1주차 위클리 리포트</span>
+                        <h3 class="text-xl font-bold text-cottage-brown">"초록빛 숲에서 스스로를 다독이며 균형을 찾아가는 한 주"</h3>
+                        <p class="text-xs text-cottage-muted max-w-xl">이번 주는 평온함과 차분함이 주를 이루었습니다. 따뜻한 차와 함께한 여유 시간이 큰 위로가 되었어요.</p>
+                    </div>
+                    <button onclick="alertModalOpen('위클리 저널 리포트가 성공적으로 다운로드되었습니다! 🍃')" class="px-6 py-3 rounded-xl bg-cottage-primary text-white font-semibold hover:bg-opacity-90 transition text-sm shadow-md whitespace-nowrap">
+                        <i class="fa-solid fa-download mr-2"></i> 주간 리포트 저장
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 서비스 소개 및 FAQ 영역 (Features & FAQ) -->
+        <section id="features" class="py-16 bg-white/40 border-t border-stone-200/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <div class="text-center space-y-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-cottage-primary px-3.5 py-1.5 bg-cottage-sage rounded-full">Guide & FAQ</span>
+                    <h2 class="text-3xl font-bold tracking-tight text-cottage-brown">자주 묻는 질문</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div class="glass-panel p-6 rounded-2xl diary-shadow space-y-2">
+                        <h4 class="font-bold text-base flex items-center text-cottage-brown">
+                            <i class="fa-solid fa-circle-question text-cottage-primary mr-2"></i>
+                            일기 내용은 안전하게 보호되나요?
+                        </h4>
+                        <p class="text-xs text-cottage-muted leading-relaxed">
+                            작성하신 모든 감정 일기는 개인 계정에 안전하게 저장되며, 외부에 공개되지 않는 나만의 숲속 오두막입니다.
+                        </p>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl diary-shadow space-y-2">
+                        <h4 class="font-bold text-base flex items-center text-cottage-brown">
+                            <i class="fa-solid fa-circle-question text-cottage-primary mr-2"></i>
+                            포근이 메이트의 답변은 어떻게 생성되나요?
+                        </h4>
+                        <p class="text-xs text-cottage-muted leading-relaxed">
+                            현재는 시뮬레이션 모드로 작동하며, 추후 Gemini API가 연동되어 더욱 다채롭고 개인 맞춤화된 숲속 위로를 제공합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 푸터 (Footer) -->
+    <footer class="bg-cottage-brown text-stone-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-cottage-primary flex items-center justify-center text-white font-bold">
+                    <i class="fa-solid fa-tree"></i>
+                </div>
+                <div>
+                    <span class="text-lg font-bold text-white">위클리 다이어리</span>
+                    <span class="block text-xs text-stone-400">© 2026 Weekly Diary. Cottagecore Edition.</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-6 text-sm">
+                <a href="/login" class="hover:text-white transition">로그인</a>
+                <a href="/signup" class="hover:text-white transition">회원가입</a>
+                <a href="/mypage" class="hover:text-white transition">마이페이지</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 알림 모달 (Custom Modal for Alerts) -->
+    <div id="customModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs hidden">
+        <div class="bg-white p-6 rounded-3xl max-w-sm w-full mx-4 diary-shadow space-y-4 text-center animate-float">
+            <div class="w-12 h-12 rounded-full bg-cottage-sage text-cottage-primary flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+            <h3 id="modalTitle" class="font-bold text-lg text-cottage-brown">포근이의 알림</h3>
+            <p id="modalMessage" class="text-xs text-cottage-muted leading-relaxed">메시지 내용이 여기에 표시됩니다.</p>
+            <button onclick="closeCustomModal()" class="w-full py-3 rounded-xl bg-cottage-primary text-white font-semibold hover:bg-opacity-90 transition text-sm">
+                확인
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript 영역 -->
+    <script>
+        // 예시글 자동 입력 함수
+        function loadSampleText() {
+            const sampleText = "오늘 아침 창가를 보니 은은한 초록빛 잎사귀들이 반겨주었다. 오후에 처리할 업무가 많아 조금 지치기도 했지만, 점심시간에 마신 따뜻한 차 한 잔 덕분에 마음이 차분해졌다. 오늘도 무사히 보낸 나를 토닥여주고 싶다.";
+            document.getElementById('diaryContent').value = sampleText;
+            
+            // '평온' 라디오 버튼 자동 체크
+            const moodRadios = document.querySelectorAll('input[name="mood"]');
+            if(moodRadios.length > 1) {
+                moodRadios[1].checked = true; // 평온 선택
+            }
+        }
+
+        // 내용 초기화 함수
+        function resetDiaryForm() {
+            document.getElementById('diaryForm').reset();
+        }
+
+        // AI 처리 시뮬레이션 함수 (사용자 입력 -> 포근이 페이로드 -> 결과 출력)
+        function handleAIProcessing(event) {
+            event.preventDefault(); // 페이지 새로고침 방지
+
+            // 1. 사용자 입력값 수집
+            const selectedMoodInput = document.querySelector('input[name="mood"]:checked');
+            const diaryText = document.getElementById('diaryContent').value;
+
+            if (!selectedMoodInput) {
+                alertModalOpen("오늘의 감정 상태를 선택해주세요!");
+                return;
+            }
+
+            const moodValue = selectedMoodInput.value;
+
+            // 2. 포근이 AI에게 전달할 페이로드(구조) 생성 확인
+            const aiPayload = {
+                timestamp: new Date().toISOString(),
+                userMood: moodValue,
+                rawContent: diaryText,
+                characterMate: "포근이",
+                requestType: "cottage_weekly_diary_analysis"
+            };
+            console.log("Cottagecore AI Payload Generated:", aiPayload);
+
+            // 로딩 상태 표시
+            const submitBtn = document.getElementById('submitBtn');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> 포근이가 숲속 편지를 쓰는 중입니다...`;
+            submitBtn.disabled = true;
+
+            // 3. 비동기 처리 시뮬레이션 (1.2초 후 결과 출력)
+            setTimeout(() => {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+
+                // 결과 데이터 동적 바인딩
+                renderAIResults(moodValue, diaryText);
+
+                // 결과 영역 표시 및 스크롤 이동
+                const resultSection = document.getElementById('result-section');
+                resultSection.classList.remove('hidden');
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+
+                alertModalOpen("포근이 메이트가 따뜻한 답장을 완성했습니다! 🌿");
+            }, 1200);
+        }
+
+        // AI 결과 데이터를 HTML에 채워넣는 함수
+        function renderAIResults(mood, text) {
+            // 날짜 설정
+            const today = new Date();
+            const dateString = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+            document.getElementById('resultDate').innerText = dateString;
+
+            // 감정 뱃지 설정
+            let emoji = "🌿";
+            if (mood === "평온") emoji = "☕";
+            else if (mood === "기쁨") emoji = "☀️";
+            else if (mood === "속상함") emoji = "🌰";
+            document.getElementById('resultMoodBadge').innerHTML = `${emoji} ${mood}`;
+
+            // 1. 따뜻한 대화형 피드백
+            document.getElementById('aiFeedbackText').innerHTML = `
+                "오늘 하루 <strong>'${mood}'</strong> 감정을 품고 초록빛 숲길을 걸어오시느라 정말 수고 많으셨어요. 
+                적어주신 이야기를 들으니 바쁜 일상 속에서도 마음의 중심을 지키려 애쓴 모습이 참 예뻐 보여요. 
+                포근이가 따뜻한 허브티 한 잔과 함께 다정한 응원을 보냅니다."
+            `;
+
+            // 2. 감성 다이어리 요약 텍스트
+            const shortSummary = text.length > 50 ? text.substring(0, 50) + "..." : text;
+            document.getElementById('aiSummaryText').innerText = `"${shortSummary}"`;
+
+            // 스케치 묘사 콘셉트
+            document.getElementById('aiSketchDesc').innerText = `"${mood} 감정을 담은 초록빛 수채화 콘셉트 (따뜻한 허브티와 나무 테이블)"`;
+
+            // 3. 앞으로 실천할 목표 3가지
+            const goalsList = document.getElementById('aiGoalsList');
+            goalsList.innerHTML = `
+                <li class="bg-cottage-bg p-3 rounded-xl border border-cottage-sage flex items-center space-x-2">
+                    <i class="fa-solid fa-check text-cottage-primary"></i>
+                    <span>창가에 앉아 5분간 깊게 숨쉬며 마음 정돈하기</span>
+                </li>
+                <li class="bg-cottage-bg p-3 rounded-xl border border-cottage-sage flex items-center space-x-2">
+                    <i class="fa-solid fa-check text-cottage-primary"></i>
+                    <span>따뜻한 차나 물 충분히 마시며 휴식 취하기</span>
+                </li>
+                <li class="bg-cottage-bg p-3 rounded-xl border border-cottage-sage flex items-center space-x-2">
+                    <i class="fa-solid fa-check text-cottage-primary"></i>
+                    <span>오늘 가장 수고한 나 자신에게 칭찬 한마디 건네기</span>
+                </li>
+            `;
+        }
+
+        // 일기 저장 버튼 기능
+        function saveDiaryRecord() {
+            alertModalOpen("감정 일기가 숲속 기록장에 안전하게 저장되었습니다! 📖");
+        }
+
+        // 위클리 저널 탭으로 이동
+        function openWeeklyJournalTab() {
+            document.getElementById('weekly-journal').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 그림일기 다시 보기 기능
+        function retriggerSketch() {
+            alertModalOpen("초록빛 수채화 그림일기 콘셉트를 다시 불러왔습니다 🎨");
+        }
+
+        // 커스텀 모달 열기 함수
+        function alertModalOpen(message) {
+            document.getElementById('modalMessage').innerText = message;
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        // 커스텀 모달 닫기 함수
+        function closeCustomModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
